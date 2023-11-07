@@ -70,6 +70,7 @@ const Register = () => {
             placeholder='Confirme sua senha'></input>
             </label>
             <button className='btn'>Cadastrar</button>
+            {error && <p className='error'>{error}</p>}
         </form>
     </div>
   )
