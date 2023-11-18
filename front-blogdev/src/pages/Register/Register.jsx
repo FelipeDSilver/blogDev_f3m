@@ -54,7 +54,7 @@ const Register = () => {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder='Entre com sua Senha'></input>
+                        placeholder='Entre com seu email'></input>
                 </label>
                 <label>
                     <span>Senha: </span>
