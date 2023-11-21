@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
-import {userAuthentication} from "../../hooks/userAuthentication";
+import {userLogin} from "../../hooks/userAuthentication";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const {userLogin, error: authError, loading} = userAuthentication();
+  const {login, error: authError, loading} = userLogin();
 
   useEffect(() => {
   }, []);
@@ -24,7 +24,7 @@ const Login = () => {
         return
     }
 
-    const res = await userLogin(user);
+    const res = await login(user);
 
     console.table(res);
   };
