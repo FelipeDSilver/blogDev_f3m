@@ -17,36 +17,38 @@ import loading from './assets/loading.gif'
 
 function App() {
   const [user, setUser] = useState(undefined)
-  const {auth} = userAuthentication()
+  const { auth } = userAuthentication()
 
   const loadingUser = user === undefined
 
 
   useEffect(() => {
-    onAuthStateChanged(auth, user =>{
+    onAuthStateChanged(auth, user => {
       setUser(user)
     })
   }, [auth])
-  
-  if (loadingUser){
+
+  console.log(user)
+
+  if (loadingUser) {
     return <div className='container load'><img src={loading} alt='Gif Loading User' width="120px" height="120px" /></div>
-}
+  }
   return (
     <>
-    <AuthProvider value={{ user }}>
-    <BrowserRouter>
-    <Navbar />
-     <div className='container'>
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        </Routes>
-      </div>
-      <Footer />
-    </BrowserRouter>
-    </AuthProvider>
+      <AuthProvider value={{ user }}>
+        <BrowserRouter>
+          <Navbar user={user} />
+          <div className='container'>
+            <Routes>
+              <Route path='/' element={<Home />}></Route>
+              <Route path='/about' element={<About />}></Route>
+              <Route path='/register' element={<Register />}></Route>
+              <Route path='/login' element={<Login />}></Route>
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }

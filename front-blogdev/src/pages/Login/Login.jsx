@@ -1,12 +1,15 @@
-import React, {useState, useEffect} from "react";
-import {userLogin} from "../../hooks/userAuthentication";
+import React, { useState, useEffect } from "react";
+import { userLogin } from "../../hooks/userAuthentication";
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const {login, error: authError, loading} = userLogin();
+  const { login, error: authError, loading } = userLogin();
+
+  const navigate = useNavigate()
 
   useEffect(() => {
   }, []);
@@ -19,14 +22,21 @@ const Login = () => {
       password,
     };
 
-    if(!email || !password){
-        setError("Preencha todos os campos")
-        return
+    if (!email || !password) {
+      setError("Preencha todos os campos")
+      return
     }
 
-    const res = await login(user);
+    try {
+      const res = await login(user);
+      if (res) {
+        navigate('/')
+        console.table(res);
+      }
+    } catch (error) {
+      console.error(error);
+    }
 
-    console.table(res);
   };
 
   return (
