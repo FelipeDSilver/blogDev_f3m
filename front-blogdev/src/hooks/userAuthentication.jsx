@@ -1,5 +1,5 @@
 import { db } from '../firebase/config'
-import{
+import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -15,84 +15,86 @@ export const userAuthentication = () => {
 
     const auth = getAuth()
 
-    function checkIfCancelled(){
-        if(cancelled){
-            return 
+    function checkIfCancelled() {
+        if (cancelled) {
+            return
         }
     }
-        async function createUser(data){
-            checkIfCancelled()
-
-            setLoading(true)
-            setError(null)
-
-            try{
-                const {user} = await createUserWithEmailAndPassword(auth,
-                    data.email,
-                    data.password
-                )
-                await updateProfile(user, {
-                    displayName: data.displayName
-                })
-
-                setLoading(false)
-
-                return user
-            } catch(error){
-                console.error(error.message)
-                console.table(typeof error.message)
-
-                let systemErrorMessage
-
-                if(error.message.includes("Password")){
-                    systemErrorMessage = "A senha precisa ter pelo menos 6 caracteres"
-                } else if(error.message.includes("email-already")){
-                    systemErrorMessage = "O e-mail já cadastrado"
-                } else{
-                    systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde"
-                }
-
-                setLoading(false)
-                setError(systemErrorMessage)
-            }
-        }
-
-        useEffect(() => {
-            return () => setCancelled(true)
-        }, [])
-
-        return{
-            auth,
-            createUser,
-            error,
-            loading
-        }
-    }
-
-    const logout = () => {
-        signOut(auth)
-    }
-
-export const userLogin = () => {
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(null)
-    const [cancelled, setCancelled] = useState(false)
-    
-    const auth = getAuth()
-
-    function checkIfCancelled(){
-        if(cancelled){
-            return 
-        }
-    }
-    async function login(data){
+    async function createUser(data) {
         checkIfCancelled()
 
         setLoading(true)
         setError(null)
 
-        try{
-            const {user} = await signInWithEmailAndPassword(auth,
+        try {
+            const { user } = await createUserWithEmailAndPassword(auth,
+                data.email,
+                data.password
+            )
+            await updateProfile(user, {
+                displayName: data.displayName
+            })
+
+            setLoading(false)
+
+            return user
+        } catch (error) {
+            console.error(error.message)
+            console.table(typeof error.message)
+
+            let systemErrorMessage
+
+            if (error.message.includes("Password")) {
+                systemErrorMessage = "A senha precisa ter pelo menos 6 caracteres"
+            } else if (error.message.includes("email-already")) {
+                systemErrorMessage = "O e-mail já cadastrado"
+            } else {
+                systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde"
+            }
+
+            setLoading(false)
+            setError(systemErrorMessage)
+        }
+    }
+
+
+    const logout = () => {
+        signOut(auth)
+    }
+    
+    useEffect(() => {
+        return () => setCancelled(true)
+    }, [])
+
+    return {
+        auth,
+        createUser,
+        error,
+        loading,
+        logout
+    }
+}
+
+export const userLogin = () => {
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(null)
+    const [cancelled, setCancelled] = useState(false)
+
+    const auth = getAuth()
+
+    function checkIfCancelled() {
+        if (cancelled) {
+            return
+        }
+    }
+    async function login(data) {
+        checkIfCancelled()
+
+        setLoading(true)
+        setError(null)
+
+        try {
+            const { user } = await signInWithEmailAndPassword(auth,
                 data.email,
                 data.password
             )
@@ -100,17 +102,17 @@ export const userLogin = () => {
             setLoading(false)
 
             return user
-        } catch(error){
+        } catch (error) {
             console.error(error.message)
             console.table(typeof error.message)
 
             let systemErrorMessage
 
-            if(error.message.includes("usuario")){
+            if (error.message.includes("usuario")) {
                 systemErrorMessage = "usuario não cadastrado"
-            } else if(error.message.includes("password")){
+            } else if (error.message.includes("password")) {
                 systemErrorMessage = "senha incorreta"
-            } else{
+            } else {
                 systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde"
             }
 
@@ -121,8 +123,8 @@ export const userLogin = () => {
 
     useEffect(() => {
         return () => setCancelled(true)
-})
-    return{
+    })
+    return {
         auth,
         login,
         error,
