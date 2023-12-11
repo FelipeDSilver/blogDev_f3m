@@ -59,9 +59,39 @@ export const userAuthentication = () => {
 
 
     const logout = () => {
+        checkIfCancelled()
         signOut(auth)
     }
-    
+
+    const login = async (data) => {
+
+        checkIfCancelled()
+
+        setLoading(true)
+        setError(false)
+
+        try {
+            await signInWithEmailAndPassword(auth, data.email, data.password)
+            setLoading(false)
+        } catch (error) {
+            console.error(error.message)
+            console.table(typeof error.message)
+
+            let systemErrorMessage
+
+            if (error.message.includes("invali-login-credentials")) {
+                systemErrorMessage = "Este usuário não está cadastrado"
+            } else if (error.message.includes("Wrong-password")) {
+                systemErrorMessage = "Há erros com suas credenciais."
+            } else {
+                systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde"
+            }
+
+            setLoading(false)
+            setError(systemErrorMessage)
+        }
+    }
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -71,7 +101,8 @@ export const userAuthentication = () => {
         createUser,
         error,
         loading,
-        logout
+        logout,
+        login
     }
 }
 
