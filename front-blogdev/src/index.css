@@ -49,6 +49,7 @@ input::placeholder, textarea::placeholder{
     padding: 10px 15px;
     font-size: 1em;
     margin: 25px auto;
+    display: block;
 }
 
 .btn:hover{
@@ -65,12 +66,12 @@ button[disabled]{
     border-radius: 10px;
 }
 
-.btn.btn-dark{
+.btn-dark{
     background-color: #18891b;
     border-radius: 0;
 }
 
-btn.btn-outline{
+.btn-outline{
     background-color: transparent;
     border-radius: 0;
     color: #000;
@@ -78,7 +79,7 @@ btn.btn-outline{
     padding: 7px 30px;
 }
 
-.btn.btn-outline:hover{
+.btn-outline:hover{
     background-color: #dc3545;
     color: #fff;
     transition: .5s;
@@ -90,5 +91,13 @@ btn.btn-outline{
     border: 1px solid #f8d4da;
     padding: 5px;
     border-radius: 5px;
+    align-items: center;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
 }

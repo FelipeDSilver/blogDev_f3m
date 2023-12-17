@@ -5,7 +5,10 @@ import {
     signInWithEmailAndPassword,
     updateProfile,
     signOut,
+    GoogleAuthProvider,
+    signInWithPopup
 } from 'firebase/auth';
+
 import { useState, useEffect } from 'react'
 
 export const userAuthentication = () => {
@@ -92,6 +95,39 @@ export const userAuthentication = () => {
         }
     }
 
+    async function googleLogin() {
+    checkIfCancelled()
+
+    setLoading(true)
+    setError(null)
+
+    const provider = new GoogleAuthProvider();
+
+    try {
+        const { user } = await signInWithPopup(auth, provider);
+        // O objeto do usuário está disponível em user
+        // Navegue ou defina o estado aqui
+
+        setLoading(false)
+
+        return user
+    } catch (error) {
+        console.error(error.message)
+        console.table(typeof error.message)
+
+        let systemErrorMessage
+
+        if (error.message.includes("popup-closed-by-user")) {
+            systemErrorMessage = "O popup foi fechado antes da finalização do processo"
+        } else {
+            systemErrorMessage = "Ocorreu um erro, tente novamente mais tarde"
+        }
+
+        setLoading(false)
+        setError(systemErrorMessage)
+    }
+}
+
     useEffect(() => {
         return () => setCancelled(true)
     }, [])
@@ -102,7 +138,8 @@ export const userAuthentication = () => {
         error,
         loading,
         logout,
-        login
+        login,
+        googleLogin
     }
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './Login.module.css'
 import { userAuthentication } from '../../hooks/userAuthentication'
 import { useNavigate } from 'react-router-dom'
+import 'firebase/auth'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -31,6 +32,9 @@ const Login = () => {
     }
   }, [authError])
 
+  const {googleLogin} = userAuthentication()
+
+
   return (
     <div className={styles.login}>
       <h1>Entrar no BlogDev</h1>
@@ -56,6 +60,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Entre com sua senha'></input>
         </label>
+        <button className='btn' onClick={() => googleLogin(() => navigate('/home'))}>Login com Google</button>
         {!loading && <button className='btn'> Login</button>}
         {loading && <button className='btn'> Aguarde...</button>}
         {error && <p className='error'>{error}</p>}

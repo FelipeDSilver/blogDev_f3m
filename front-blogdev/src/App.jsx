@@ -14,8 +14,8 @@ import Login from './pages/Login/Login'
 import loading from './assets/loading.gif'
 import CreatePost from './pages/CreatePost/CreatePost'
 import Dashboard from './pages/Dashboard/Dashboard'
-
-
+import Post from './pages/Post/Post'
+import EditPost from './pages/EditPost/EditPost'
 
 function App() {
   const [user, setUser] = useState(undefined)
@@ -46,6 +46,8 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/post/create' element={<CreatePost />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/posts/:id' element={<Post />}></Route>
+        <Route path='/posts/edit/:id' element={<EditPost />}></Route>
         </Routes>
       </div>
       <Footer />
